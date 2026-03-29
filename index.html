@@ -1,0 +1,2045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WAP Micro Syllabus — ENCT 302</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ===== CSS Variables ===== */
+    :root {
+      --bg: #f5f7fa;
+      --surface: #ffffff;
+      --surface-alt: #f0f4f8;
+      --border: #e2e8f0;
+      --border-light: #edf2f7;
+      --text: #1a202c;
+      --text-secondary: #4a5568;
+      --text-muted: #718096;
+      --primary: #3182ce;
+      --primary-light: #ebf4ff;
+      --primary-dark: #2c5282;
+      --accent: #6366f1;
+      --accent-light: #eef2ff;
+      --green: #38a169;
+      --green-light: #f0fff4;
+      --orange: #dd6b20;
+      --orange-light: #fffaf0;
+      --red: #e53e3e;
+      --red-light: #fff5f5;
+      --purple: #805ad5;
+      --purple-light: #faf5ff;
+      --teal: #319795;
+      --teal-light: #e6fffa;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.06);
+      --shadow-lg: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05);
+      --radius: 8px;
+      --radius-lg: 12px;
+    }
+
+    /* ===== Reset & Base ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== Tooltip for abbreviations ===== */
+    abbr[title] {
+      text-decoration: none;
+      border-bottom: 1px dotted var(--primary);
+      cursor: help;
+      position: relative;
+      font-weight: 500;
+      color: var(--primary-dark);
+    }
+
+    abbr[title]:hover::after {
+      content: attr(title);
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--text);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 400;
+      white-space: nowrap;
+      z-index: 1000;
+      box-shadow: var(--shadow-md);
+      pointer-events: none;
+      animation: tooltipIn 0.15s ease;
+    }
+
+    abbr[title]:hover::before {
+      content: '';
+      position: absolute;
+      bottom: calc(100% + 2px);
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: var(--text);
+      z-index: 1001;
+      pointer-events: none;
+      animation: tooltipIn 0.15s ease;
+    }
+
+    @keyframes tooltipIn {
+      from { opacity: 0; transform: translateX(-50%) translateY(4px); }
+      to { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+
+    /* ===== Header ===== */
+    .header {
+      background: linear-gradient(135deg, #1a365d 0%, #2c5282 50%, #3182ce 100%);
+      color: #fff;
+      padding: 3rem 2rem 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    .header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      position: relative;
+    }
+
+    .header .subtitle {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      font-weight: 300;
+      position: relative;
+    }
+
+    .header .course-code {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(4px);
+      padding: 0.35rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      margin-top: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      position: relative;
+    }
+
+    /* ===== Navigation ===== */
+    .nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .nav-inner::-webkit-scrollbar { display: none; }
+
+    .nav-link {
+      padding: 0.85rem 1.1rem;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .nav-link:hover {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    /* ===== Container ===== */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    /* ===== Info Cards Row ===== */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .info-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .info-card h3 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--primary-light);
+    }
+
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    .info-table th,
+    .info-table td {
+      padding: 0.45rem 0.75rem;
+      text-align: center;
+      border: 1px solid var(--border-light);
+    }
+
+    .info-table th {
+      background: var(--surface-alt);
+      font-weight: 600;
+      color: var(--text-secondary);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .info-table td {
+      color: var(--text);
+    }
+
+    /* ===== Depth Codes Legend ===== */
+    .legend {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 2.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .legend h3 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .legend-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.5rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      padding: 0.35rem 0.6rem;
+      border-radius: 6px;
+      background: var(--surface-alt);
+    }
+
+    .legend-item code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--primary-dark);
+      background: var(--primary-light);
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      min-width: 36px;
+      text-align: center;
+    }
+
+    .legend-item span {
+      color: var(--text-secondary);
+    }
+
+    /* ===== Unit Sections ===== */
+    .unit {
+      margin-bottom: 2.5rem;
+    }
+
+    .unit-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      padding: 1rem 1.25rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .unit-header:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary);
+    }
+
+    .unit-number {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .unit-1 .unit-number { background: var(--primary-light); color: var(--primary-dark); }
+    .unit-2 .unit-number { background: var(--accent-light); color: var(--accent); }
+    .unit-3 .unit-number { background: var(--green-light); color: var(--green); }
+    .unit-4 .unit-number { background: var(--orange-light); color: var(--orange); }
+    .unit-5 .unit-number { background: var(--red-light); color: var(--red); }
+    .unit-6 .unit-number { background: var(--purple-light); color: var(--purple); }
+
+    .unit-title-block {
+      flex: 1;
+    }
+
+    .unit-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .unit-hours {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .unit-badge {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .badge-lec { background: var(--primary-light); color: var(--primary-dark); }
+    .badge-tut { background: var(--accent-light); color: var(--accent); }
+    .badge-prac { background: var(--green-light); color: var(--green); }
+
+    /* ===== Syllabus Table ===== */
+    .syllabus-table-wrapper {
+      overflow-x: auto;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      background: var(--surface);
+    }
+
+    .syllabus-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    .syllabus-table thead th {
+      background: var(--surface-alt);
+      padding: 0.75rem 1rem;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      border-bottom: 2px solid var(--border);
+      position: sticky;
+      top: 0;
+      white-space: nowrap;
+    }
+
+    .syllabus-table thead th:first-child {
+      width: 60px;
+      text-align: center;
+    }
+
+    .syllabus-table thead th:nth-child(2) { min-width: 220px; }
+    .syllabus-table thead th:nth-child(3) { width: 110px; text-align: center; }
+    .syllabus-table thead th:nth-child(4) { min-width: 280px; }
+    .syllabus-table thead th:nth-child(5),
+    .syllabus-table thead th:nth-child(6),
+    .syllabus-table thead th:nth-child(7),
+    .syllabus-table thead th:nth-child(8) { width: 50px; text-align: center; }
+
+    .syllabus-table tbody tr {
+      border-bottom: 1px solid var(--border-light);
+      transition: background 0.15s;
+    }
+
+    .syllabus-table tbody tr:hover {
+      background: var(--primary-light);
+    }
+
+    .syllabus-table tbody tr.sub-topic {
+      background: var(--surface);
+    }
+
+    .syllabus-table tbody tr.sub-topic:hover {
+      background: var(--primary-light);
+    }
+
+    .syllabus-table td {
+      padding: 0.65rem 1rem;
+      vertical-align: top;
+    }
+
+    .syllabus-table td:first-child {
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .syllabus-table td:nth-child(3) { text-align: center; }
+    .syllabus-table td:nth-child(5),
+    .syllabus-table td:nth-child(6),
+    .syllabus-table td:nth-child(7),
+    .syllabus-table td:nth-child(8) {
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .topic-name {
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .topic-name a {
+      color: var(--primary);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .topic-name a:hover {
+      color: var(--primary-dark);
+      border-bottom-color: var(--primary);
+    }
+
+    .topic-name a::after {
+      content: ' ↗';
+      font-size: 0.7em;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .topic-name a:hover::after {
+      opacity: 1;
+    }
+
+    .depth-codes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      justify-content: center;
+    }
+
+    .depth-code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 500;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      background: var(--surface-alt);
+      color: var(--text-secondary);
+      cursor: help;
+      border: 1px solid var(--border-light);
+    }
+
+    .description {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ===== Model Question ===== */
+    .model-question {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      margin-top: 3rem;
+      box-shadow: var(--shadow);
+    }
+
+    .model-question h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .model-question ol {
+      padding-left: 1.5rem;
+    }
+
+    .model-question li {
+      margin-bottom: 1rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
+    .model-question li strong {
+      color: var(--text);
+    }
+
+    .marks {
+      display: inline-block;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.15rem 0.5rem;
+      border-radius: 10px;
+      margin-left: 0.25rem;
+    }
+
+    .sub-parts {
+      list-style-type: upper-alpha;
+      margin-top: 0.5rem;
+      padding-left: 1.5rem;
+    }
+
+    .sub-parts li {
+      margin-bottom: 0.4rem;
+      font-size: 0.9rem;
+    }
+
+    /* ===== Footer ===== */
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+
+    .footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 768px) {
+      .header { padding: 2rem 1rem; }
+      .header h1 { font-size: 1.5rem; }
+      .info-grid { grid-template-columns: 1fr; }
+      .legend-grid { grid-template-columns: repeat(2, 1fr); }
+      .container { padding: 1rem 0.75rem 3rem; }
+      .nav-link { padding: 0.75rem 0.85rem; font-size: 0.78rem; }
+      .unit-header { flex-wrap: wrap; }
+      .unit-badge { width: 100%; justify-content: flex-start; }
+    }
+
+    @media (max-width: 480px) {
+      .legend-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ===== Study Material CTA ===== */
+    .study-cta {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
+      border: 1px solid var(--primary);
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.5rem;
+      margin-bottom: 2.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .study-cta .cta-icon {
+      font-size: 1.5rem;
+    }
+
+    .study-cta p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      flex: 1;
+    }
+
+    .study-cta a {
+      color: var(--primary-dark);
+      font-weight: 600;
+      text-decoration: none;
+      white-space: nowrap;
+      padding: 0.5rem 1.2rem;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      transition: background 0.2s;
+    }
+
+    .study-cta a:hover {
+      background: var(--primary-dark);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <h1>Micro Syllabus — Web Application Programming</h1>
+    <p class="subtitle">Bachelor of Computer Engineering &bull; Year III / Part I</p>
+    <span class="course-code">ENCT 302</span>
+  </header>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="#unit-1" class="nav-link">Unit 1 — Introduction</a>
+      <a href="#unit-2" class="nav-link">Unit 2 — JavaScript &amp; Client-Side</a>
+      <a href="#unit-3" class="nav-link">Unit 3 — Server-Side</a>
+      <a href="#unit-4" class="nav-link">Unit 4 — Web Services &amp; APIs</a>
+      <a href="#unit-5" class="nav-link">Unit 5 — Security</a>
+      <a href="#unit-6" class="nav-link">Unit 6 — Deployment &amp; Trends</a>
+      <a href="#model-question" class="nav-link">Model Question</a>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <!-- ===== TEACHING SCHEDULE & EXAM SCHEME ===== -->
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>Teaching Schedule (Hours/Week)</h3>
+        <table class="info-table">
+          <thead>
+            <tr>
+              <th><abbr title="Lecture">L</abbr></th>
+              <th><abbr title="Tutorial">T</abbr></th>
+              <th><abbr title="Practical / Lab">P</abbr></th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>3</td><td>1</td><td>3</td><td>7</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="info-card">
+        <h3>Examination Scheme</h3>
+        <table class="info-table">
+          <thead>
+            <tr>
+              <th colspan="3">Theory</th>
+              <th colspan="2">Practical</th>
+              <th rowspan="2" style="vertical-align:middle;">Total</th>
+            </tr>
+            <tr>
+              <th>Assessment</th>
+              <th>Final (Hrs)</th>
+              <th>Final Marks</th>
+              <th>Assessment</th>
+              <th>Final Marks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>40</td>
+              <td>3</td>
+              <td>60</td>
+              <td>50</td>
+              <td>—</td>
+              <td><strong>150</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===== DEPTH CODE LEGEND ===== -->
+    <div class="legend">
+      <h3>Depth Codes Reference</h3>
+      <div class="legend-grid">
+        <div class="legend-item"><code>E</code>     <span>Explanation</span></div>
+        <div class="legend-item"><code>C</code>     <span>Circuit</span></div>
+        <div class="legend-item"><code>D</code>     <span>Definition</span></div>
+        <div class="legend-item"><code>DM</code>    <span>Demonstration</span></div>
+        <div class="legend-item"><code>DV</code>    <span>Derivation</span></div>
+        <div class="legend-item"><code>DW</code>    <span>Drawing</span></div>
+        <div class="legend-item"><code>P</code>     <span>Proof</span></div>
+        <div class="legend-item"><code>I</code>     <span>Illustration</span></div>
+        <div class="legend-item"><code>NUM</code>   <span>Numerical</span></div>
+        <div class="legend-item"><code>PRG</code>   <span>Programming</span></div>
+        <div class="legend-item"><code>S</code>     <span>State</span></div>
+        <div class="legend-item"><code>ACT</code>   <span>Activity-based Learning</span></div>
+        <div class="legend-item"><code>MP</code>    <span>Mini Project</span></div>
+        <div class="legend-item"><code>EXP</code>   <span>Experiment</span></div>
+        <div class="legend-item"><code>REV</code>   <span>Review / Recap</span></div>
+        <div class="legend-item"><code>PS</code>    <span>Problem Solving</span></div>
+        <div class="legend-item"><code>QA</code>    <span>Question Answer</span></div>
+        <div class="legend-item"><code>Q</code>     <span>Quiz</span></div>
+        <div class="legend-item"><code>ST</code>    <span>Surprise Test</span></div>
+        <div class="legend-item"><code>MT</code>    <span>Mid-Term Test</span></div>
+      </div>
+    </div>
+
+    <!-- ===== STUDY MATERIAL CTA ===== -->
+    <div class="study-cta">
+      <span class="cta-icon">📚</span>
+      <p>Complete study materials, notes, and practical guides for every topic are available online. Click the linked topics below or visit the full guide.</p>
+      <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide" target="_blank" rel="noopener">Open Study Guide</a>
+    </div>
+
+    <!-- ==========================================
+         UNIT 1 — INTRODUCTION
+         ========================================== -->
+    <section class="unit unit-1" id="unit-1">
+      <div class="unit-header">
+        <div class="unit-number">1</div>
+        <div class="unit-title-block">
+          <div class="unit-title">Introduction</div>
+          <div class="unit-hours">6 Lecture hrs &bull; 2 Tutorial hrs &bull; 2 Practical hrs</div>
+        </div>
+        <div class="unit-badge">
+          <span class="badge badge-lec">L 6</span>
+          <span class="badge badge-tut">T 2</span>
+          <span class="badge badge-prac">P 2</span>
+        </div>
+      </div>
+
+      <div class="syllabus-table-wrapper">
+        <table class="syllabus-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Topic / Subtopic</th>
+              <th>Depth Code</th>
+              <th>Description</th>
+              <th>Wk</th>
+              <th><abbr title="Lecture">L</abbr></th>
+              <th><abbr title="Tutorial">T</abbr></th>
+              <th><abbr title="Practical">P</abbr></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1.1</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/html-css#overview-of-web-applications" target="_blank" rel="noopener">
+                  Overview of Web Applications &amp; Evolution of Web Architecture
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Definition">D</abbr>
+                  <abbr class="depth-code" title="Illustration">I</abbr>
+                  <abbr class="depth-code" title="Question Answer">QA</abbr>
+                </div>
+              </td>
+              <td class="description">Explain the concept of traditional vs. modern web apps, evolution of static to dynamic web application, multi-tier &amp; single-page architectures with diagrams.</td>
+              <td>1</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>1.2</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/html-css#client-server-architecture" target="_blank" rel="noopener">
+                  Client–Server Architecture, <abbr title="HyperText Transfer Protocol">HTTP</abbr>, <abbr title="HyperText Transfer Protocol Secure">HTTPS</abbr>, <abbr title="Uniform Resource Locator">URLs</abbr>, <abbr title="Domain Name System">DNS</abbr>, Web Browsers
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Definition">D</abbr>
+                  <abbr class="depth-code" title="Illustration">I</abbr>
+                  <abbr class="depth-code" title="Drawing">DW</abbr>
+                  <abbr class="depth-code" title="Question Answer">QA</abbr>
+                </div>
+              </td>
+              <td class="description">Architecture diagrams, <abbr title="HyperText Transfer Protocol">HTTP</abbr> request–response cycle, <abbr title="Domain Name System">DNS</abbr> lookup flow, browser rendering basics.</td>
+              <td>1</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>1.3</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/html-css#html-basics" target="_blank" rel="noopener">
+                  <abbr title="HyperText Markup Language">HTML</abbr> Basics: Syntax, Tags, Attributes, Document Structure
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Illustration">I</abbr>
+                  <abbr class="depth-code" title="Programming">PRG</abbr>
+                </div>
+              </td>
+              <td class="description">Demonstration of basic <abbr title="HyperText Markup Language">HTML</abbr> structure, headings, paragraphs, links, images.</td>
+              <td>1</td>
+              <td>0.5</td>
+              <td>0.5</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>1.4</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/html-css#forms--inputs" target="_blank" rel="noopener">
+                  Forms &amp; Inputs, Tables, Lists, Multimedia
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Programming">PRG</abbr>
+                  <abbr class="depth-code" title="Numerical">NUM</abbr>
+                  <abbr class="depth-code" title="Question Answer">QA</abbr>
+                </div>
+              </td>
+              <td class="description">Practical implementation of forms, interactive inputs, audio/video tags.</td>
+              <td>0.5</td>
+              <td>0.5</td>
+              <td>0.5</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>1.5</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/html-css#semantic-html5-elements" target="_blank" rel="noopener">
+                  Semantic <abbr title="HyperText Markup Language version 5">HTML5</abbr> Elements
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Illustration">I</abbr>
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                </div>
+              </td>
+              <td class="description">Header, footer, section, article, nav, etc.</td>
+              <td>0.5</td>
+              <td>0.25</td>
+              <td>0.25</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>1.6</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/html-css#css-basics" target="_blank" rel="noopener">
+                  <abbr title="Cascading Style Sheets">CSS</abbr> Basics: Selectors, Properties, Values, Box Model
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Programming">PRG</abbr>
+                  <abbr class="depth-code" title="Problem Solving">PS</abbr>
+                </div>
+              </td>
+              <td class="description"><abbr title="Cascading Style Sheets">CSS</abbr> rules, inline/internal/external styles, margin/padding/border.</td>
+              <td>1</td>
+              <td>0.25</td>
+              <td>0.25</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>1.7</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/html-css#css-framework-bootstrap" target="_blank" rel="noopener">
+                  <abbr title="Cascading Style Sheets">CSS</abbr> Framework: Bootstrap Introduction
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Programming">PRG</abbr>
+                  <abbr class="depth-code" title="Activity-based Learning">ACT</abbr>
+                </div>
+              </td>
+              <td class="description">Grid system demo, containers, responsive layout activity.</td>
+              <td>1</td>
+              <td>0.5</td>
+              <td>0.5</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         UNIT 2 — JAVASCRIPT & CLIENT-SIDE
+         ========================================== -->
+    <section class="unit unit-2" id="unit-2">
+      <div class="unit-header">
+        <div class="unit-number">2</div>
+        <div class="unit-title-block">
+          <div class="unit-title">JavaScript and Client-Side Programming</div>
+          <div class="unit-hours">12 Lecture hrs &bull; 4 Tutorial hrs &bull; 4 Practical hrs</div>
+        </div>
+        <div class="unit-badge">
+          <span class="badge badge-lec">L 12</span>
+          <span class="badge badge-tut">T 4</span>
+          <span class="badge badge-prac">P 4</span>
+        </div>
+      </div>
+
+      <div class="syllabus-table-wrapper">
+        <table class="syllabus-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Topic / Subtopic</th>
+              <th>Depth Code</th>
+              <th>Description</th>
+              <th>Wk</th>
+              <th><abbr title="Lecture">L</abbr></th>
+              <th><abbr title="Tutorial">T</abbr></th>
+              <th><abbr title="Practical">P</abbr></th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- 2.1 JavaScript Essentials -->
+            <tr>
+              <td>2.1</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/javascript#javascript-essentials" target="_blank" rel="noopener">
+                  JavaScript Essentials
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Definition">D</abbr>
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Question Answer">QA</abbr>
+                </div>
+              </td>
+              <td class="description">Intro to scripting, <abbr title="JavaScript">JS</abbr> execution model, placement in <abbr title="HyperText Markup Language">HTML</abbr>.</td>
+              <td>0.5</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr class="sub-topic">
+              <td>2.1.1</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/javascript#data-types-variables-control-structures" target="_blank" rel="noopener">
+                  Data Types, Variables, Control Structures, Functions
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Problem Solving">PS</abbr>
+                </div>
+              </td>
+              <td class="description">Practical coding of loops, conditionals, functions.</td>
+              <td>1</td>
+              <td>0.25</td>
+              <td>0.25</td>
+              <td></td>
+            </tr>
+            <tr class="sub-topic">
+              <td>2.1.2</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/javascript#dom-manipulation" target="_blank" rel="noopener">
+                  <abbr title="Document Object Model">DOM</abbr> Manipulation, Events, Form Validation
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Activity-based Learning">ACT</abbr>
+                  <abbr class="depth-code" title="Programming">PRG</abbr>
+                </div>
+              </td>
+              <td class="description">Selecting elements, updating <abbr title="User Interface">UI</abbr>, event listeners, validation.</td>
+              <td>1</td>
+              <td>0.25</td>
+              <td>0.25</td>
+              <td></td>
+            </tr>
+            <tr class="sub-topic">
+              <td>2.1.3</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/javascript#local-storage--session-storage" target="_blank" rel="noopener">
+                  Local Storage &amp; Session Storage
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Programming">PRG</abbr>
+                </div>
+              </td>
+              <td class="description">Storing and retrieving key-value data; building a small demo.</td>
+              <td>0.5</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr class="sub-topic">
+              <td>2.1.4</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/javascript#gui-interactions" target="_blank" rel="noopener">
+                  <abbr title="Graphical User Interface">GUI</abbr> Interactions (Basic Dynamic <abbr title="User Interface">UI</abbr>)
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Activity-based Learning">ACT</abbr>
+                  <abbr class="depth-code" title="Illustration">I</abbr>
+                </div>
+              </td>
+              <td class="description">Hover effects, dynamic menus, modals (<abbr title="JavaScript">JS</abbr>-only).</td>
+              <td>1</td>
+              <td>0.5</td>
+              <td>0.5</td>
+              <td></td>
+            </tr>
+            <tr class="sub-topic">
+              <td>2.1.5</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/javascript#jquery" target="_blank" rel="noopener">
+                  JavaScript Library: jQuery
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Programming">PRG</abbr>
+                </div>
+              </td>
+              <td class="description"><abbr title="Document Object Model">DOM</abbr> shortcuts, event handling, <abbr title="Asynchronous JavaScript and XML">AJAX</abbr> basics.</td>
+              <td>1</td>
+              <td>0.5</td>
+              <td>0.5</td>
+              <td></td>
+            </tr>
+
+            <!-- 2.2 Modern JavaScript -->
+            <tr>
+              <td>2.2</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/javascript#modern-javascript-es6" target="_blank" rel="noopener">
+                  Modern JavaScript (<abbr title="ECMAScript 2015 and later versions">ES6+</abbr>)
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Definition">D</abbr>
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Problem Solving">PS</abbr>
+                </div>
+              </td>
+              <td class="description">Let/const, arrow functions, destructuring, spread/rest.</td>
+              <td>1</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr class="sub-topic">
+              <td>2.2.1</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/javascript#async-operations" target="_blank" rel="noopener">
+                  Async Operations: Callbacks, Promises, Async/Await
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Illustration">I</abbr>
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Problem Solving">PS</abbr>
+                </div>
+              </td>
+              <td class="description">Understanding async flow; building simple <abbr title="Application Programming Interface">API</abbr> calls.</td>
+              <td>0.5</td>
+              <td>0.25</td>
+              <td>0.25</td>
+              <td></td>
+            </tr>
+            <tr class="sub-topic">
+              <td>2.2.2</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/javascript#modules-and-imports" target="_blank" rel="noopener">
+                  Modules and Imports
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Programming">PRG</abbr>
+                </div>
+              </td>
+              <td class="description">Structuring <abbr title="JavaScript">JS</abbr> files using <abbr title="ECMAScript">ES</abbr> modules.</td>
+              <td>0.25</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+
+            <!-- 2.3 Client-Side Applications -->
+            <tr>
+              <td>2.3</td>
+              <td class="topic-name" style="font-weight:600;color:var(--accent);">Client-Side Applications</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr class="sub-topic">
+              <td>2.3.1</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/react#introduction-to-react" target="_blank" rel="noopener">
+                  Introduction to React <abbr title="JavaScript">JS</abbr>
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Illustration">I</abbr>
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                </div>
+              </td>
+              <td class="description">React <abbr title="JavaScript XML — a syntax extension for JavaScript">JSX</abbr>, components, rendering.</td>
+              <td>0.25</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr class="sub-topic">
+              <td>2.3.2</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/react#traditional-multi-page-apps-vs-spas" target="_blank" rel="noopener">
+                  Traditional Multi-Page Apps vs <abbr title="Single Page Application">SPAs</abbr>
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Illustration">I</abbr>
+                  <abbr class="depth-code" title="Question Answer">QA</abbr>
+                </div>
+              </td>
+              <td class="description"><abbr title="Single Page Application">SPA</abbr> concept, reload-free navigation.</td>
+              <td>0.5</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr class="sub-topic">
+              <td>2.3.3</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/react#react-component-based-ui--props" target="_blank" rel="noopener">
+                  React Component-Based <abbr title="User Interface">UI</abbr> &amp; Props
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Activity-based Learning">ACT</abbr>
+                  <abbr class="depth-code" title="Programming">PRG</abbr>
+                </div>
+              </td>
+              <td class="description">Building functional components with props.</td>
+              <td>1</td>
+              <td>1</td>
+              <td>1</td>
+              <td></td>
+            </tr>
+            <tr class="sub-topic">
+              <td>2.3.4</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/react#state-management--data-flow" target="_blank" rel="noopener">
+                  State Management &amp; Data Flow
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Problem Solving">PS</abbr>
+                  <abbr class="depth-code" title="Programming">PRG</abbr>
+                </div>
+              </td>
+              <td class="description">useState, one-way data flow, parent-child states.</td>
+              <td>0.5</td>
+              <td>0.5</td>
+              <td>0.5</td>
+              <td></td>
+            </tr>
+            <tr class="sub-topic">
+              <td>2.3.5</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/react#client-side-routing" target="_blank" rel="noopener">
+                  Client-Side Routing (React Router)
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Problem Solving">PS</abbr>
+                </div>
+              </td>
+              <td class="description">Navigation without reloading, routing basics.</td>
+              <td>1</td>
+              <td>0.5</td>
+              <td>0.5</td>
+              <td></td>
+            </tr>
+            <tr class="sub-topic">
+              <td>2.3.6</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/react#fetch-api" target="_blank" rel="noopener">
+                  Fetch <abbr title="Application Programming Interface">API</abbr>: Fetching, Displaying Data, Handling Errors &amp; Loading States
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Numerical">NUM</abbr>
+                  <abbr class="depth-code" title="Programming">PRG</abbr>
+                </div>
+              </td>
+              <td class="description">Working with real/placeholder <abbr title="Application Programming Interface">API</abbr>, error handling.</td>
+              <td>1</td>
+              <td>0.25</td>
+              <td>0.25</td>
+              <td></td>
+            </tr>
+            <tr class="sub-topic">
+              <td>2.3.7</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/react#comparison-of-js-libraries" target="_blank" rel="noopener">
+                  Comparison of <abbr title="JavaScript">JS</abbr> Libraries: React vs Angular vs Vue
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Illustration">I</abbr>
+                  <abbr class="depth-code" title="Review / Recap">REV</abbr>
+                </div>
+              </td>
+              <td class="description">Strengths, weaknesses, use cases.</td>
+              <td>1</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         UNIT 3 — SERVER-SIDE WEB PROGRAMMING
+         ========================================== -->
+    <section class="unit unit-3" id="unit-3">
+      <div class="unit-header">
+        <div class="unit-number">3</div>
+        <div class="unit-title-block">
+          <div class="unit-title">Server-Side Web Programming</div>
+          <div class="unit-hours">9 Lecture hrs &bull; 4 Tutorial hrs &bull; 4 Practical hrs</div>
+        </div>
+        <div class="unit-badge">
+          <span class="badge badge-lec">L 9</span>
+          <span class="badge badge-tut">T 4</span>
+          <span class="badge badge-prac">P 4</span>
+        </div>
+      </div>
+
+      <div class="syllabus-table-wrapper">
+        <table class="syllabus-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Topic / Subtopic</th>
+              <th>Depth Code</th>
+              <th>Description</th>
+              <th>Wk</th>
+              <th><abbr title="Lecture">L</abbr></th>
+              <th><abbr title="Tutorial">T</abbr></th>
+              <th><abbr title="Practical">P</abbr></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>3.1</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/django#mvc-architecture" target="_blank" rel="noopener">
+                  Introduction to <abbr title="Model-View-Controller">MVC</abbr> Architecture
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Definition">D</abbr>
+                  <abbr class="depth-code" title="Illustration">I</abbr>
+                  <abbr class="depth-code" title="Question Answer">QA</abbr>
+                </div>
+              </td>
+              <td class="description">Model–View–Controller pattern, flow diagrams, responsibilities.</td>
+              <td>0.5</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>3.2</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/django#role-of-backend" target="_blank" rel="noopener">
+                  Role of Backend in Web Applications
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Illustration">I</abbr>
+                  <abbr class="depth-code" title="Definition">D</abbr>
+                </div>
+              </td>
+              <td class="description">Server logic, routing, business logic, security layers.</td>
+              <td>0.5</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>3.3</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/django#django" target="_blank" rel="noopener">
+                  Backend Web Framework: Django (Overview)
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Illustration">I</abbr>
+                </div>
+              </td>
+              <td class="description">Django apps, <abbr title="Model-Template-View — Django's version of MVC">MTV</abbr> pattern, project structure.</td>
+              <td>0.5</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>3.4</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/django#urls--views" target="_blank" rel="noopener">
+                  Handling Requests &amp; Responses
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Programming">PRG</abbr>
+                  <abbr class="depth-code" title="Activity-based Learning">ACT</abbr>
+                </div>
+              </td>
+              <td class="description">Writing views, <abbr title="HyperText Transfer Protocol">HTTP</abbr> methods, <abbr title="JavaScript Object Notation">JSON</abbr> response.</td>
+              <td>1</td>
+              <td>0.5</td>
+              <td>0.5</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>3.5</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/django#forms" target="_blank" rel="noopener">
+                  Form Data Handling &amp; Sessions
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Problem Solving">PS</abbr>
+                  <abbr class="depth-code" title="Programming">PRG</abbr>
+                </div>
+              </td>
+              <td class="description">Form POST processing, <abbr title="Cross-Site Request Forgery">CSRF</abbr>, session usage.</td>
+              <td>1</td>
+              <td>0.5</td>
+              <td>0.5</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>3.6</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/django#templates--static-files" target="_blank" rel="noopener">
+                  Routing, Middleware, Templates
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Drawing">DW</abbr>
+                  <abbr class="depth-code" title="Programming">PRG</abbr>
+                </div>
+              </td>
+              <td class="description"><abbr title="Uniform Resource Locator">URL</abbr> dispatcher, custom middleware, Template language.</td>
+              <td>1</td>
+              <td>0.5</td>
+              <td>0.5</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>3.7</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/django#comparison-of-backend-frameworks" target="_blank" rel="noopener">
+                  Overview &amp; Comparison of Backend Frameworks
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Illustration">I</abbr>
+                  <abbr class="depth-code" title="Review / Recap">REV</abbr>
+                </div>
+              </td>
+              <td class="description">Django vs Flask vs FastAPI vs .NET <abbr title="Model-View-Controller">MVC</abbr> vs Rails vs Spring Boot vs Node.js.</td>
+              <td>0.5</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>3.8</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/django#database-types" target="_blank" rel="noopener">
+                  Database Integration: Relational vs <abbr title="Not Only SQL — non-relational databases">NoSQL</abbr>, <abbr title="Create, Read, Update, Delete">CRUD</abbr>, <abbr title="Object-Relational Mapping">ORM</abbr>
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Programming">PRG</abbr>
+                </div>
+              </td>
+              <td class="description">Using Django <abbr title="Object-Relational Mapping">ORM</abbr>, basic models, performing <abbr title="Create, Read, Update, Delete">CRUD</abbr>.</td>
+              <td>2</td>
+              <td>1</td>
+              <td>1</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>3.9</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/django#sessions-and-cookies" target="_blank" rel="noopener">
+                  Authentication &amp; Authorization: Cookies, Sessions, <abbr title="JSON Web Token">JWT</abbr>
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Problem Solving">PS</abbr>
+                </div>
+              </td>
+              <td class="description">Login flow, cookies vs sessions, intro to <abbr title="JSON Web Token">JWT</abbr>.</td>
+              <td>1</td>
+              <td>0.5</td>
+              <td>0.5</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>3.10</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/django#middleware" target="_blank" rel="noopener">
+                  Middleware for Logging, Error Handling, Security
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Programming">PRG</abbr>
+                  <abbr class="depth-code" title="Activity-based Learning">ACT</abbr>
+                </div>
+              </td>
+              <td class="description">Build simple custom middleware for logging &amp; error handling.</td>
+              <td>1</td>
+              <td>1</td>
+              <td>1</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         UNIT 4 — WEB SERVICES & APIS
+         ========================================== -->
+    <section class="unit unit-4" id="unit-4">
+      <div class="unit-header">
+        <div class="unit-number">4</div>
+        <div class="unit-title-block">
+          <div class="unit-title">Web Services &amp; APIs</div>
+          <div class="unit-hours">7 Lecture hrs &bull; 3 Tutorial hrs &bull; 3 Practical hrs</div>
+        </div>
+        <div class="unit-badge">
+          <span class="badge badge-lec">L 7</span>
+          <span class="badge badge-tut">T 3</span>
+          <span class="badge badge-prac">P 3</span>
+        </div>
+      </div>
+
+      <div class="syllabus-table-wrapper">
+        <table class="syllabus-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Topic / Subtopic</th>
+              <th>Depth Code</th>
+              <th>Description</th>
+              <th>Wk</th>
+              <th><abbr title="Lecture">L</abbr></th>
+              <th><abbr title="Tutorial">T</abbr></th>
+              <th><abbr title="Practical">P</abbr></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>4.1</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/web-apis-with-drf#api-basics" target="_blank" rel="noopener">
+                  <abbr title="Application Programming Interface">API</abbr> Basics: Role in Web Applications
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Definition">D</abbr>
+                  <abbr class="depth-code" title="Illustration">I</abbr>
+                  <abbr class="depth-code" title="Question Answer">QA</abbr>
+                </div>
+              </td>
+              <td class="description">What <abbr title="Application Programming Interface">APIs</abbr> are, why they are used, browser–server communication.</td>
+              <td>0.5</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>4.2</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/web-apis-with-drf#rest-principles-and-design-restful-apis" target="_blank" rel="noopener">
+                  <abbr title="Representational State Transfer">REST</abbr> Principles and <abbr title="Representational State Transfer">RESTful</abbr> <abbr title="Application Programming Interface">API</abbr> Design
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Definition">D</abbr>
+                  <abbr class="depth-code" title="Drawing">DW</abbr>
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                </div>
+              </td>
+              <td class="description"><abbr title="HyperText Transfer Protocol">HTTP</abbr> verbs, endpoints, statelessness, resource modeling, <abbr title="Application Programming Interface">API</abbr> structure.</td>
+              <td>1</td>
+              <td>0.5</td>
+              <td>0.5</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>4.3</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/web-apis-with-drf#json-versus-xml-data-exchange" target="_blank" rel="noopener">
+                  <abbr title="JavaScript Object Notation">JSON</abbr> vs <abbr title="eXtensible Markup Language">XML</abbr> Data Exchange
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Definition">D</abbr>
+                  <abbr class="depth-code" title="Illustration">I</abbr>
+                  <abbr class="depth-code" title="Numerical">NUM</abbr>
+                </div>
+              </td>
+              <td class="description"><abbr title="JavaScript Object Notation">JSON</abbr> syntax, <abbr title="eXtensible Markup Language">XML</abbr> structure, differences, parsing demo.</td>
+              <td>0.5</td>
+              <td>0.5</td>
+              <td>0.5</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>4.4</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/web-apis-with-drf#data-validation-and-serialization" target="_blank" rel="noopener">
+                  Data Validation &amp; Serialization
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Problem Solving">PS</abbr>
+                  <abbr class="depth-code" title="Programming">PRG</abbr>
+                </div>
+              </td>
+              <td class="description">Validating request data, serializing/deserializing objects (Django <abbr title="Representational State Transfer">REST</abbr> or similar).</td>
+              <td>2</td>
+              <td>0.5</td>
+              <td>0.5</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>4.5</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/web-apis-with-drf#microservices" target="_blank" rel="noopener">
+                  Microservices Architecture Basics
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Illustration">I</abbr>
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                </div>
+              </td>
+              <td class="description">Microservices concepts, <abbr title="Application Programming Interface">API</abbr> gateway, loose coupling, communication.</td>
+              <td>1</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>4.6</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/web-apis-with-drf#lab-crud-with-drf" target="_blank" rel="noopener">
+                  Building &amp; Testing a Simple <abbr title="Representational State Transfer">REST</abbr> <abbr title="Application Programming Interface">API</abbr>
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Programming">PRG</abbr>
+                  <abbr class="depth-code" title="Activity-based Learning">ACT</abbr>
+                </div>
+              </td>
+              <td class="description">Implementing endpoints, returning <abbr title="JavaScript Object Notation">JSON</abbr>, testing via Postman/browser.</td>
+              <td>2</td>
+              <td>1.5</td>
+              <td>1.5</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         UNIT 5 — WEB APPLICATION SECURITY
+         ========================================== -->
+    <section class="unit unit-5" id="unit-5">
+      <div class="unit-header">
+        <div class="unit-number">5</div>
+        <div class="unit-title-block">
+          <div class="unit-title">Web Application Security</div>
+          <div class="unit-hours">6 Lecture hrs &bull; 1 Tutorial hr &bull; 1 Practical hr</div>
+        </div>
+        <div class="unit-badge">
+          <span class="badge badge-lec">L 6</span>
+          <span class="badge badge-tut">T 1</span>
+          <span class="badge badge-prac">P 1</span>
+        </div>
+      </div>
+
+      <div class="syllabus-table-wrapper">
+        <table class="syllabus-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Topic / Subtopic</th>
+              <th>Depth Code</th>
+              <th>Description</th>
+              <th>Wk</th>
+              <th><abbr title="Lecture">L</abbr></th>
+              <th><abbr title="Tutorial">T</abbr></th>
+              <th><abbr title="Practical">P</abbr></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>5.1</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/security#51-common-vulnerabilities" target="_blank" rel="noopener">
+                  Common Vulnerabilities: <abbr title="Cross-Site Scripting">XSS</abbr>, <abbr title="Structured Query Language">SQL</abbr> Injection, <abbr title="Cross-Site Request Forgery">CSRF</abbr>
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Definition">D</abbr>
+                  <abbr class="depth-code" title="Illustration">I</abbr>
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                </div>
+              </td>
+              <td class="description">Explanation + demonstration of vulnerabilities with small examples.</td>
+              <td>1</td>
+              <td>0.25</td>
+              <td>0.25</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>5.2</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/security#52-security-best-practices" target="_blank" rel="noopener">
+                  Security Best Practices (Input Validation, Sanitization, <abbr title="HyperText Transfer Protocol Secure">HTTPS</abbr>, Secure Cookies, Env Variables)
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Problem Solving">PS</abbr>
+                </div>
+              </td>
+              <td class="description">Secure coding practices, showing validation/sanitization techniques.</td>
+              <td>2</td>
+              <td>0.25</td>
+              <td>0.25</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>5.3</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/security#53-authentication" target="_blank" rel="noopener">
+                  Authentication Practices &amp; Token Handling
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Definition">D</abbr>
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Problem Solving">PS</abbr>
+                </div>
+              </td>
+              <td class="description">Password hashing, sessions, <abbr title="JSON Web Token">JWT</abbr> flow, secure token handling.</td>
+              <td>2</td>
+              <td>0.25</td>
+              <td>0.25</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>5.4</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/security#54-security-in-full-stack-apps" target="_blank" rel="noopener">
+                  Security in Full-Stack Apps: <abbr title="Cross-Origin Resource Sharing">CORS</abbr>, Safe Sessions
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Activity-based Learning">ACT</abbr>
+                </div>
+              </td>
+              <td class="description"><abbr title="Cross-Origin Resource Sharing">CORS</abbr> policies, session hardening, browser security settings.</td>
+              <td>1</td>
+              <td>0.25</td>
+              <td>0.25</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         UNIT 6 — DEPLOYMENT & MODERN TRENDS
+         ========================================== -->
+    <section class="unit unit-6" id="unit-6">
+      <div class="unit-header">
+        <div class="unit-number">6</div>
+        <div class="unit-title-block">
+          <div class="unit-title">Web Application Deployment and Modern Trends</div>
+          <div class="unit-hours">5 Lecture hrs &bull; 1 Tutorial hr &bull; 1 Practical hr</div>
+        </div>
+        <div class="unit-badge">
+          <span class="badge badge-lec">L 5</span>
+          <span class="badge badge-tut">T 1</span>
+          <span class="badge badge-prac">P 1</span>
+        </div>
+      </div>
+
+      <div class="syllabus-table-wrapper">
+        <table class="syllabus-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Topic / Subtopic</th>
+              <th>Depth Code</th>
+              <th>Description</th>
+              <th>Wk</th>
+              <th><abbr title="Lecture">L</abbr></th>
+              <th><abbr title="Tutorial">T</abbr></th>
+              <th><abbr title="Practical">P</abbr></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>6.1</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/testing-deployment#61-full-stack-development" target="_blank" rel="noopener">
+                  Full-Stack Development Overview
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Illustration">I</abbr>
+                  <abbr class="depth-code" title="Definition">D</abbr>
+                </div>
+              </td>
+              <td class="description">Understanding frontend–backend integration, build pipeline, <abbr title="Application Programming Interface">API</abbr> integration.</td>
+              <td>1</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>6.2</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/testing-deployment#62-testing-and-quality-assurance" target="_blank" rel="noopener">
+                  Testing and <abbr title="Quality Assurance">QA</abbr>
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Problem Solving">PS</abbr>
+                </div>
+              </td>
+              <td class="description">Unit tests, integration tests, <abbr title="User Interface">UI</abbr> testing basics, automation overview.</td>
+              <td>1</td>
+              <td>0.5</td>
+              <td>0.5</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>6.3</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/testing-deployment#63-devops-and-cicd" target="_blank" rel="noopener">
+                  <abbr title="Development Operations">DevOps</abbr>, <abbr title="Continuous Integration / Continuous Delivery">CI/CD</abbr>
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Definition">D</abbr>
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                </div>
+              </td>
+              <td class="description">Pipelines, GitHub Actions, Docker intro, deployment workflow.</td>
+              <td>1</td>
+              <td>0.5</td>
+              <td>0.5</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>6.4</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/testing-deployment#64-progressive-web-apps" target="_blank" rel="noopener">
+                  Progressive Web Apps (<abbr title="Progressive Web Application">PWAs</abbr>)
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Explanation">E</abbr>
+                  <abbr class="depth-code" title="Illustration">I</abbr>
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                </div>
+              </td>
+              <td class="description">Service workers, caching, offline-first, manifest files.</td>
+              <td>1</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>6.5</td>
+              <td class="topic-name">
+                <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide/testing-deployment#65-responsive-design-and-usability" target="_blank" rel="noopener">
+                  Responsive Design &amp; Usability
+                </a>
+              </td>
+              <td>
+                <div class="depth-codes">
+                  <abbr class="depth-code" title="Demonstration">DM</abbr>
+                  <abbr class="depth-code" title="Activity-based Learning">ACT</abbr>
+                  <abbr class="depth-code" title="Illustration">I</abbr>
+                </div>
+              </td>
+              <td class="description">Mobile-first approach, breakpoints, <abbr title="User Experience">UX</abbr> considerations.</td>
+              <td>1</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         MODEL QUESTION
+         ========================================== -->
+    <section class="model-question" id="model-question">
+      <h2>📝 Model Question — ENCT 302</h2>
+      <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:1.5rem;"><em>Answer ALL questions.</em></p>
+      <ol>
+        <li>
+          <strong>Explain the concept of semantic web.</strong>
+          <span class="marks">4 Marks</span>
+        </li>
+        <li>
+          <strong>Design an <abbr title="HyperText Markup Language">HTML</abbr> form for student registration</strong> with the following: name, email, phone, program selection (dropdown), and a submit button.
+          <span class="marks">4 Marks</span>
+        </li>
+        <li>
+          <strong>Explain <abbr title="Document Object Model">DOM</abbr> manipulation and event handling using JavaScript</strong> with suitable code examples. Demonstrate add/remove <abbr title="Document Object Model">DOM</abbr> nodes dynamically. A college wants to develop a <abbr title="Single Page Application">SPA</abbr> for course selection using React <abbr title="JavaScript">JS</abbr>.
+          <span class="marks">10 Marks</span>
+          <ol class="sub-parts">
+            <li>Draw an architecture diagram for <abbr title="Single Page Application">SPA</abbr> using React (components, props, state, router).</li>
+            <li>Explain the flow of data from a backend <abbr title="Application Programming Interface">API</abbr> to <abbr title="User Interface">UI</abbr> components using fetch() and state hooks.</li>
+            <li>Compare React with Angular and Vue.</li>
+          </ol>
+        </li>
+        <li>
+          <strong>List and explain any three features of Modern JavaScript</strong> with code snippets (<abbr title="ECMAScript 2015 and later versions">ES6+</abbr>).
+          <span class="marks">6 Marks</span>
+        </li>
+        <li>
+          <strong>Explain <abbr title="Model-View-Controller">MVC</abbr> architecture</strong> with a labeled diagram.
+          <span class="marks">4 Marks</span>
+        </li>
+        <li>
+          <strong>Write a Django flow for:</strong>
+          <span class="marks">8 Marks</span>
+          <ol class="sub-parts">
+            <li><abbr title="Uniform Resource Locator">URL</abbr> routing</li>
+            <li>View handling form data</li>
+            <li>Template rendering</li>
+            <li>Session storage</li>
+          </ol>
+          Design the complete request to response cycle using a block diagram.
+        </li>
+        <li>
+          <strong>Explain <abbr title="JavaScript Object Notation">JSON</abbr> versus <abbr title="eXtensible Markup Language">XML</abbr></strong>, with examples, advantages, and data parsing workflow.
+          <span class="marks">4 Marks</span>
+        </li>
+        <li>
+          <strong>Consider a hospital management system designing Microservices Architecture.</strong> Explain with an architectural diagram highlighting:
+          <span class="marks">5 Marks</span>
+          <ol class="sub-parts">
+            <li><abbr title="Application Programming Interface">API</abbr> gateway</li>
+            <li>Service communication</li>
+            <li>Independent deployments</li>
+            <li>Database per service strategy</li>
+          </ol>
+        </li>
+        <li>
+          <strong>Explain <abbr title="Structured Query Language">SQL</abbr> Injection, <abbr title="Cross-Site Scripting">XSS</abbr>, and <abbr title="Cross-Site Request Forgery">CSRF</abbr></strong> with examples.
+          <span class="marks">4 Marks</span>
+        </li>
+        <li>
+          <strong>Explain why <abbr title="Cross-Origin Resource Sharing">CORS</abbr> is needed</strong> in full-stack applications.
+          <span class="marks">4 Marks</span>
+        </li>
+        <li>
+          <strong>Write short notes on:</strong>
+          <span class="marks">3 + 4 Marks</span>
+          <ol class="sub-parts">
+            <li>Continuous Integration and Continuous Delivery</li>
+            <li>Progressive Web Apps</li>
+          </ol>
+        </li>
+      </ol>
+    </section>
+
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <p>Micro Syllabus — Web Application Programming (ENCT 302) &bull; Year III / Part I</p>
+    <p style="margin-top:0.5rem;">Study materials: <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide" target="_blank" rel="noopener">bidursapkota.com.np</a></p>
+  </footer>
+
+</body>
+</html>
