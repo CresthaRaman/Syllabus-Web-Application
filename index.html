@@ -2041,5 +2041,532 @@
     <p style="margin-top:0.5rem;">Study materials: <a href="https://www.bidursapkota.com.np/blogs/web-application-programming-complete-guide" target="_blank" rel="noopener">bidursapkota.com.np</a></p>
   </footer>
 
+  <!-- ===== ANNOTATION TOOLBAR ===== -->
+  <div class="anno-toolbar" id="annoToolbar">
+    <button class="anno-btn anno-toggle" id="annoToggle" title="Toggle Toolbar">🖊️</button>
+    <div class="anno-tools" id="annoTools">
+      <button class="anno-btn highlight-btn active" data-color="#fef08a" title="Yellow Highlight" style="background:#fef08a;">Y</button>
+      <button class="anno-btn highlight-btn" data-color="#bbf7d0" title="Green Highlight" style="background:#bbf7d0;">G</button>
+      <button class="anno-btn highlight-btn" data-color="#bfdbfe" title="Blue Highlight" style="background:#bfdbfe;">B</button>
+      <button class="anno-btn highlight-btn" data-color="#fecaca" title="Red Highlight" style="background:#fecaca;">R</button>
+      <button class="anno-btn highlight-btn" data-color="#e9d5ff" title="Purple Highlight" style="background:#e9d5ff;">P</button>
+      <div class="anno-sep"></div>
+      <button class="anno-btn" id="addNoteBtn" title="Add Sticky Note">📝</button>
+      <button class="anno-btn" id="eraserBtn" title="Eraser — Remove Highlights">🧹</button>
+      <button class="anno-btn" id="clearAllBtn" title="Clear All Annotations">🗑️</button>
+      <div class="anno-sep"></div>
+      <button class="anno-btn" id="exportPdfBtn" title="Export as PDF">📄 PDF</button>
+    </div>
+  </div>
+
+  <!-- ===== NOTES PANEL ===== -->
+  <div class="notes-panel" id="notesPanel">
+    <div class="notes-panel-header">
+      <h3>📒 My Notes</h3>
+      <button class="notes-panel-close" id="notesPanelClose">✕</button>
+    </div>
+    <div class="notes-list" id="notesList"></div>
+    <div class="notes-add">
+      <textarea id="noteInput" placeholder="Type your note here..." rows="3"></textarea>
+      <button id="saveNoteBtn" class="notes-save-btn">Save Note</button>
+    </div>
+  </div>
+
+  <style>
+    /* ===== Annotation Toolbar ===== */
+    .anno-toolbar {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: flex-end;
+      gap: 8px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .anno-toggle {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      font-size: 1.3rem;
+      box-shadow: var(--shadow-lg);
+      border: 2px solid var(--primary);
+      background: var(--surface) !important;
+    }
+
+    .anno-tools {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 10px;
+      box-shadow: var(--shadow-lg);
+      animation: toolbarIn 0.2s ease;
+    }
+
+    .anno-tools.open { display: flex; }
+
+    @keyframes toolbarIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .anno-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+      background: var(--surface);
+      color: var(--text);
+      padding: 0;
+    }
+
+    .anno-btn:hover { box-shadow: var(--shadow-md); transform: scale(1.05); }
+
+    .highlight-btn.active { outline: 3px solid var(--primary); outline-offset: 2px; }
+
+    #exportPdfBtn { width: auto; padding: 0 12px; font-size: 0.75rem; white-space: nowrap; }
+
+    .anno-sep { width: 100%; height: 1px; background: var(--border); margin: 2px 0; }
+
+    /* Eraser mode cursor */
+    body.eraser-mode .highlighted { cursor: pointer; }
+    body.eraser-mode { cursor: crosshair; }
+
+    /* ===== Highlights ===== */
+    .highlighted {
+      border-radius: 2px;
+      padding: 1px 0;
+      transition: background 0.2s;
+    }
+
+    .highlighted:hover {
+      filter: brightness(0.92);
+    }
+
+    /* ===== Notes Panel ===== */
+    .notes-panel {
+      position: fixed;
+      top: 60px;
+      right: -380px;
+      width: 360px;
+      max-height: calc(100vh - 80px);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      z-index: 9998;
+      display: flex;
+      flex-direction: column;
+      transition: right 0.3s ease;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .notes-panel.open { right: 0; }
+
+    .notes-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .notes-panel-header h3 { font-size: 1rem; font-weight: 600; margin: 0; }
+
+    .notes-panel-close {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: var(--text-muted);
+      padding: 4px;
+    }
+
+    .notes-panel-close:hover { color: var(--red); }
+
+    .notes-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 16px;
+    }
+
+    .note-item {
+      background: var(--surface-alt);
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 10px;
+      position: relative;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: var(--text-secondary);
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .note-item .note-time {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .note-item .note-context {
+      font-size: 0.75rem;
+      color: var(--primary);
+      font-style: italic;
+      margin-bottom: 6px;
+      padding: 4px 8px;
+      background: var(--primary-light);
+      border-radius: 4px;
+      display: block;
+    }
+
+    .note-item .note-delete {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: none;
+      border: none;
+      font-size: 0.85rem;
+      cursor: pointer;
+      color: var(--text-muted);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .note-item .note-delete:hover { background: var(--red-light); color: var(--red); }
+
+    .notes-add {
+      padding: 12px 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .notes-add textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      resize: vertical;
+      background: var(--surface-alt);
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .notes-add textarea:focus { outline: 2px solid var(--primary); border-color: transparent; }
+
+    .notes-save-btn {
+      width: 100%;
+      padding: 10px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .notes-save-btn:hover { background: var(--primary-dark); }
+
+    /* ===== Print / PDF Styles ===== */
+    @media print {
+      .anno-toolbar, .notes-panel, .nav, .study-cta { display: none !important; }
+      .header { break-after: avoid; }
+      .unit { break-inside: avoid; }
+      body { background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .highlighted { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .container { max-width: 100%; padding: 1rem; }
+    }
+
+    /* ===== Responsive Adjustments ===== */
+    @media (max-width: 480px) {
+      .notes-panel { width: 100%; right: -100%; border-radius: 0; }
+      .anno-toolbar { bottom: 12px; right: 12px; }
+    }
+  </style>
+
+  <script>
+  (function() {
+    'use strict';
+
+    const STORAGE_KEY = 'syllabus_annotations';
+
+    // ===== State =====
+    let state = loadState();
+    let currentColor = '#fef08a';
+    let eraserMode = false;
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) return JSON.parse(raw);
+      } catch(e) { /* ignore */ }
+      return { highlights: [], notes: [] };
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch(e) { /* ignore */ }
+    }
+
+    // ===== Toolbar Toggle =====
+    const toolbar = document.getElementById('annoTools');
+    document.getElementById('annoToggle').addEventListener('click', () => {
+      toolbar.classList.toggle('open');
+    });
+
+    // ===== Color Selection =====
+    document.querySelectorAll('.highlight-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        eraserMode = false;
+        document.body.classList.remove('eraser-mode');
+        document.getElementById('eraserBtn').style.outline = '';
+        document.querySelectorAll('.highlight-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentColor = btn.dataset.color;
+      });
+    });
+
+    // ===== Text Highlighting =====
+    document.addEventListener('mouseup', handleHighlight);
+    document.addEventListener('touchend', handleHighlight);
+
+    function handleHighlight() {
+      if (eraserMode) return;
+      const sel = window.getSelection();
+      if (!sel || sel.isCollapsed || !sel.toString().trim()) return;
+
+      // Only highlight within the container
+      const container = document.querySelector('.container');
+      if (!container) return;
+
+      const range = sel.getRangeAt(0);
+      if (!container.contains(range.commonAncestorContainer)) return;
+
+      // Don't highlight inside notes panel or toolbar
+      const ancestor = range.commonAncestorContainer.parentElement;
+      if (ancestor && (ancestor.closest('.anno-toolbar') || ancestor.closest('.notes-panel'))) return;
+
+      try {
+        const mark = document.createElement('mark');
+        mark.className = 'highlighted';
+        mark.style.backgroundColor = currentColor;
+        mark.dataset.id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+
+        range.surroundContents(mark);
+        sel.removeAllRanges();
+
+        // Save highlight info
+        state.highlights.push({
+          id: mark.dataset.id,
+          text: mark.textContent,
+          color: currentColor,
+          path: getElementPath(mark),
+          timestamp: new Date().toISOString()
+        });
+        saveState();
+      } catch(e) {
+        // surroundContents can fail on complex selections spanning elements
+        // Fallback: highlight each text node in the range
+        try {
+          const contents = range.extractContents();
+          const mark = document.createElement('mark');
+          mark.className = 'highlighted';
+          mark.style.backgroundColor = currentColor;
+          mark.dataset.id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+          mark.appendChild(contents);
+          range.insertNode(mark);
+          sel.removeAllRanges();
+
+          state.highlights.push({
+            id: mark.dataset.id,
+            text: mark.textContent,
+            color: currentColor,
+            path: getElementPath(mark),
+            timestamp: new Date().toISOString()
+          });
+          saveState();
+        } catch(e2) { /* skip */ }
+      }
+    }
+
+    function getElementPath(el) {
+      const parts = [];
+      let node = el;
+      while (node && node !== document.body) {
+        let idx = 0;
+        let sib = node.previousElementSibling;
+        while (sib) { idx++; sib = sib.previousElementSibling; }
+        parts.unshift(node.tagName.toLowerCase() + '[' + idx + ']');
+        node = node.parentElement;
+      }
+      return parts.join('>');
+    }
+
+    // ===== Eraser Mode =====
+    document.getElementById('eraserBtn').addEventListener('click', function() {
+      eraserMode = !eraserMode;
+      document.body.classList.toggle('eraser-mode', eraserMode);
+      this.style.outline = eraserMode ? '3px solid var(--red)' : '';
+      if (eraserMode) {
+        document.querySelectorAll('.highlight-btn').forEach(b => b.classList.remove('active'));
+      }
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!eraserMode) return;
+      const mark = e.target.closest('.highlighted');
+      if (mark) {
+        e.preventDefault();
+        e.stopPropagation();
+        const id = mark.dataset.id;
+        // Unwrap the mark
+        const parent = mark.parentNode;
+        while (mark.firstChild) parent.insertBefore(mark.firstChild, mark);
+        parent.removeChild(mark);
+        parent.normalize();
+        // Remove from state
+        state.highlights = state.highlights.filter(h => h.id !== id);
+        saveState();
+      }
+    }, true);
+
+    // ===== Clear All =====
+    document.getElementById('clearAllBtn').addEventListener('click', () => {
+      if (!confirm('Remove ALL highlights and notes? This cannot be undone.')) return;
+      // Remove all highlights
+      document.querySelectorAll('.highlighted').forEach(mark => {
+        const parent = mark.parentNode;
+        while (mark.firstChild) parent.insertBefore(mark.firstChild, mark);
+        parent.removeChild(mark);
+        parent.normalize();
+      });
+      state.highlights = [];
+      state.notes = [];
+      saveState();
+      renderNotes();
+    });
+
+    // ===== Notes Panel =====
+    const notesPanel = document.getElementById('notesPanel');
+    document.getElementById('addNoteBtn').addEventListener('click', () => {
+      notesPanel.classList.toggle('open');
+      // Pre-fill with selected text if any
+      const sel = window.getSelection();
+      if (sel && !sel.isCollapsed && sel.toString().trim()) {
+        const context = sel.toString().trim().substring(0, 200);
+        document.getElementById('noteInput').dataset.context = context;
+        document.getElementById('noteInput').placeholder = `Note about: "${context.substring(0, 60)}..."`;
+      } else {
+        document.getElementById('noteInput').dataset.context = '';
+        document.getElementById('noteInput').placeholder = 'Type your note here...';
+      }
+    });
+
+    document.getElementById('notesPanelClose').addEventListener('click', () => {
+      notesPanel.classList.remove('open');
+    });
+
+    document.getElementById('saveNoteBtn').addEventListener('click', () => {
+      const input = document.getElementById('noteInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      state.notes.push({
+        id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+        text: text,
+        context: input.dataset.context || '',
+        timestamp: new Date().toISOString()
+      });
+      saveState();
+      input.value = '';
+      input.dataset.context = '';
+      input.placeholder = 'Type your note here...';
+      renderNotes();
+    });
+
+    // Allow Ctrl+Enter to save note
+    document.getElementById('noteInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+        e.preventDefault();
+        document.getElementById('saveNoteBtn').click();
+      }
+    });
+
+    function renderNotes() {
+      const list = document.getElementById('notesList');
+      if (state.notes.length === 0) {
+        list.innerHTML = '<p style="text-align:center;color:var(--text-muted);font-size:0.82rem;padding:2rem 0;">No notes yet. Select text and click 📝 to add a note.</p>';
+        return;
+      }
+      list.innerHTML = state.notes.map(n => {
+        const date = new Date(n.timestamp);
+        const timeStr = date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+        const contextHtml = n.context
+          ? `<span class="note-context">"${escapeHtml(n.context.substring(0, 100))}${n.context.length > 100 ? '...' : ''}"</span>`
+          : '';
+        return `<div class="note-item" data-id="${n.id}">
+          <span class="note-time">${timeStr}</span>
+          ${contextHtml}
+          <button class="note-delete" data-id="${n.id}" title="Delete note">✕</button>
+          ${escapeHtml(n.text)}
+        </div>`;
+      }).reverse().join('');
+
+      // Delete handlers
+      list.querySelectorAll('.note-delete').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.notes = state.notes.filter(n => n.id !== btn.dataset.id);
+          saveState();
+          renderNotes();
+        });
+      });
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    // ===== PDF Export =====
+    document.getElementById('exportPdfBtn').addEventListener('click', () => {
+      window.print();
+    });
+
+    // ===== Init =====
+    renderNotes();
+
+    // Restore highlights from saved state on page load
+    // Note: highlights are DOM-based and persist until page reload.
+    // On reload, previously highlighted DOM is lost, so we show a count badge.
+    if (state.highlights.length > 0 || state.notes.length > 0) {
+      const badge = document.createElement('span');
+      badge.style.cssText = 'position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;font-size:0.6rem;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;';
+      badge.textContent = state.highlights.length + state.notes.length;
+      document.getElementById('annoToggle').style.position = 'relative';
+      document.getElementById('annoToggle').appendChild(badge);
+    }
+
+  })();
+  </script>
+
 </body>
 </html>
